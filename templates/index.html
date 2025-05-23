@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Parser</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 700px; margin: auto; }
+    textarea { width: 100%; height: 200px; font-size: 16px; margin-bottom: 1rem; }
+    button { padding: 10px 20px; font-size: 16px; }
+    .result { margin-top: 2rem; border-top: 1px solid #ccc; padding-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <h1>Resume Parser</h1>
+
+  <textarea id="resumeText" placeholder="Paste your resume text here..."></textarea><br>
+  <button onclick="submitResume()">Parse Resume</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    function submitResume() {
+      const resumeText = document.getElementById('resumeText').value;
+      fetch('/parse_resume', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resume_text: resumeText })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = `
+          <h3>Parsed Result:</h3>
+          <p><strong>Email:</strong> ${data.email || 'N/A'}</p>
+          <p><strong>Phone:</strong> ${data.phone || 'N/A'}</p>
+          <p><strong>Skills:</strong> ${data.skills.join(', ') || 'N/A'}</p>
+          <p><strong>Predicted Job Role:</strong> ${data.predicted_job_role}</p>
+        `;
+      })
+      .catch(error => { alert('Error: ' + error); });
+    }
+  </script>
+
+</body>
+</html>

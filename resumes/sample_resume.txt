@@ -1,0 +1,9 @@
+John Doe
+Email: johndoe@gmail.com
+Phone: +1 987-654-3210
+
+Skills:
+Python, Django, Machine Learning, MySQL, Flask
+
+Experience:
+Software Engineer at ABC Corp
